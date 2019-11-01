@@ -1,6 +1,7 @@
 _ = require "underscore"
 $ = require("gulp-load-plugins")()
 gulp = require "gulp"
+ghPages = require "gulp-gh-pages"
 path = require "path"
 rename = require "gulp-rename"
 merge = require "merge-stream"
@@ -23,6 +24,7 @@ config =
     scripts: "app/scripts"
     styles: "app/styles"
     assets: "app/assets"
+    images: "app/assets/images"
 
   serverPort: 9000
 
@@ -35,7 +37,7 @@ config =
       filename: "bundle.js"
 
     resolve:
-      extensions: ["", ".js", ".coffee", ".scss", ".css", ".ttf"]
+      extensions: ["", ".js", ".coffee", ".scss", ".css", ".ttf", ".png"]
       alias:
         "assets": path.join __dirname, config.paths.assets
 
@@ -92,6 +94,9 @@ gulp
       .src path.join(config.paths.assets, "**")
       .pipe gulp.dest("#{config.paths.tmp}/assets")
 
+      # console.log(config.paths.images)
+      # console.log(config.paths.tmp)
+
 
     instructions = gulp
       .src path.join(config.paths.app, "index.html")
@@ -135,5 +140,10 @@ gulp
 
   .task "dist", ->
     runSequence "copy-assets", "build", "inline", "copy-page-files"
+
+  .task "deploy", ->
+    gulp
+      .src('./.tmp/**/*')
+      .pipe(ghPages())
 
   .task "default", ["serve"]
