@@ -104,7 +104,7 @@ class App
     canvas
 
   getName: (forceUpdate) ->
-    name = (not forceUpdate and localStorage["name"]) || prompt "What's your name?"
+    name = (not forceUpdate and localStorage["name"]) || prompt "Qual seu nome?"
     localStorage["name"] = name
     @$nameTag.text(name) if name
 
@@ -248,11 +248,11 @@ class App
 
   onClickFinish: =>
     confirm = prompt "
-      This will show the results of your code. Doing this before the round is over
-      WILL DISQUALIFY YOU. Are you sure you want to proceed? Type \"yes\" to confirm.
+      Essa ação irá mostrar o resultado do seu código. Fazendo isso antes do jogo acabar 
+      VOCÊ SERÁ DESQUALIFICADO. Tem certeza que deseja prosseguir? Digite \"sim\" para confirmar.
     "
 
-    if confirm?.toLowerCase() is "yes"
+    if confirm?.toLowerCase() is "sim"
       @$result[0].contentWindow.postMessage(@editor.getValue(), "*")
       @$result.show()
 
