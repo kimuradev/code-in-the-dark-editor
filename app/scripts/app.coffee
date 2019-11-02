@@ -43,6 +43,7 @@ class App
   "Stupendous!", "Extreme!", "Awesome!"]
 
   currentStreak: 0
+  maxStreak: 0
   powerMode: false
   particles: []
   particlePointer: 0
@@ -50,6 +51,7 @@ class App
 
   constructor: ->
     @$streakCounter = $ ".streak-container .counter"
+    @$maxStreakCounter = $ ".streak-container .max"
     @$streakBar = $ ".streak-container .bar"
     @$exclamations = $ ".streak-container .exclamations"
     @$reference = $ ".reference-screenshot-container"
@@ -129,13 +131,20 @@ class App
 
     @refreshStreakBar()
 
+    @saveMaxStreak()
+
     @renderStreak()
+
+    @renderMaxStreak()
 
   endStreak: ->
     @currentStreak = 0
     @renderStreak()
     @deactivatePowerMode()
 
+  saveMaxStreak: ->
+    @maxStreak = if @currentStreak > @maxStreak then @currentStreak else @maxStreak
+    
   renderStreak: ->
     @$streakCounter
       .text @currentStreak
@@ -143,6 +152,14 @@ class App
 
     _.defer =>
       @$streakCounter.addClass "bump"
+
+  renderMaxStreak: ->
+    @$maxStreakCounter
+      .text @maxStreak
+      .removeClass "bump"
+
+    _.defer =>
+      @$streakCounter.addClass "bump"    
 
   refreshStreakBar: ->
     @$streakBar.css

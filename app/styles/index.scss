@@ -170,6 +170,7 @@ body.power-mode #editor {
     position: relative;
     opacity: 0.5;
     margin-top: 23px;
+    margin-bottom: 10px;
     height: 8px;
     background: #4effa1;
     width: 100%;
@@ -179,6 +180,16 @@ body.power-mode #editor {
   .counter {
     font-size: 80px;
     color: #4effa1;
+    padding-top: 30px;
+
+    &.bump {
+      animation: grow 0.25s both;
+    }
+  }
+
+  .max {
+    font-size: 80px;
+    color: #ffb94e;
     padding-top: 30px;
 
     &.bump {
@@ -331,6 +342,10 @@ body.power-mode {
   .streak-container {
     .counter {
       color: #00ddff;
+    }
+
+    .max {
+      color: #ffb94e;
     }
 
     .bar {
